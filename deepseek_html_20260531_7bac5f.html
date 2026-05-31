@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>于菁 | 结构生物学博士 · 博士后研究员</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+            background: #0a0a2a;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        #canvas-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .avatar {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            animation: float 3s ease-in-out infinite, glow 2s ease-in-out infinite;
+            box-shadow: 0 0 30px rgba(0,210,255,0.3);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0,210,255,0.3); }
+            50% { box-shadow: 0 0 50px rgba(0,210,255,0.6); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #fff, #00d2ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .info-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-tag {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            margin: 0.3rem;
+            transition: all 0.3s ease;
+        }
+
+        .badge:hover {
+            background: rgba(0,210,255,0.3);
+            transform: scale(1.05);
+        }
+
+        .section {
+            margin: 3rem 0;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(90deg, #00d2ff, transparent);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(0,210,255,0.5);
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #00d2ff;
+        }
+
+        .card .icon {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+            display: inline-block;
+        }
+
+        .paper-list {
+            list-style: none;
+        }
+        .paper-list li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.9rem;
+        }
+        .paper-list li::before {
+            content: "📄";
+            position: absolute;
+            left: 0;
+        }
+        .paper-list .author-highlight {
+            color: #00d2ff;
+            font-weight: bold;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+        .skill-tag {
+            background: rgba(0,210,255,0.2);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+        .skill-tag:hover {
+            background: rgba(0,210,255,0.5);
+            transform: scale(1.02);
+        }
+
+        .award-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+        .award-year {
+            min-width: 60px;
+            color: #00d2ff;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .container { padding: 1rem; }
+            .hero { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="canvas-bg"></canvas>
+
+<div class="container">
+    <div class="hero">
+        <div class="avatar">
+            🔬
+        </div>
+        <h1>于菁</h1>
+        <div class="subtitle">结构生物学博士 | 博士后研究员 | mRNA疫苗研发</div>
+        <div class="info-bar">
+            <span class="info-tag">🎓 上海科技大学 · 博士 (2018-2025)</span>
+            <span class="info-tag">🏫 江南大学 · 学士 (2014-2018)</span>
+            <span class="info-tag">🔬 中科院杭州医学所 · 博士后 (2025至今)</span>
+        </div>
+        <div class="info-bar">
+            <span class="info-tag">📧 1344867568@qq.com</span>
+            <span class="info-tag">📞 1881653576</span>
+            <span class="info-tag">📍 山东威海</span>
+            <span class="info-tag">🎂 1996.03</span>
+        </div>
+        <div>
+            <span class="badge">🏆 Nature Communications 第一作者</span>
+            <span class="badge">🧬 冷冻电镜专家</span>
+            <span class="badge">💉 mRNA疫苗研发</span>
+            <span class="badge">🔬 膜蛋白结构解析</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">💼 当前职位</h2>
+        <div class="card">
+            <div class="icon">🧪</div>
+            <h3>博士后研究员 · 中国科学院杭州医学研究所</h3>
+            <p style="margin-bottom: 0.5rem;">合作导师：李晓林教授</p>
+            <p>与AI计算团队合作开展mRNA疫苗研发与肿瘤免疫治疗研究，聚焦结直肠癌mRNA疫苗的开发与药效评价。</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">🔬 科研经历</h2>
+        <div class="card-grid">
+            <div class="card">
+                <div class="icon">🧬</div>
+                <h3>分枝杆菌耐药机制研究</h3>
+                <p>解析分枝杆菌ABC转运体MsRv1273c/Rv1272c复合物结构，阐明异烟肼耐药机制。第一作者发表于《Nature Communications》。</p>
+            </div>
+            <div class="card">
+                <div class="icon">🦠</div>
+                <h3>新型冠状病毒结构解析</h3>
+                <p>参与新冠病毒刺突蛋白与人源ACE2受体的冷冻电镜结构解析，成果发表于《Nature》等期刊。</p>
+            </div>
+            <div class="card">
+                <div class="icon">💊</div>
+                <h3>基于结构的药物设计</h3>
+                <p>利用冷冻电镜等分子生物物理手段解析药物靶点三维结构，推动基于结构的药物设计。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">📄 代表论文</h2>
+        <div class="card">
+            <ul class="paper-list">
+                <li><span class="author-highlight">Jing Yu</span>, ... (2024) Structure and mechanism of a mycobacterial isoniazid efflux pump. <strong>Nature Communications</strong></li>
+                <li><span class="author-highlight">Jing Yu</span> (co-author) (2023) Cryo-EM structures of a prokaryotic heme transporter CydDC. <strong>Protein & Cell</strong></li>
+                <li>Zhenming Jin, ..., <span class="author-highlight">Jing Yu</span>, ... (2020) Structure of Mpro from SARS-CoV-2. <strong>Nature</strong></li>
+                <li>Zhenming Jin, ..., <span class="author-highlight">Jing Yu</span>, ... (2020) Structural basis for inhibition of SARS-CoV-2 main protease. <strong>NSMB</strong></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">⚙️ 核心技术</h2>
+        <div class="card">
+            <div class="skill-tags">
+                <span class="skill-tag">分子克隆</span>
+                <span class="skill-tag">膜蛋白纯化</span>
+                <span class="skill-tag">冷冻电镜</span>
+                <span class="skill-tag">CryoSPARC</span>
+                <span class="skill-tag">PyMOL</span>
+                <span class="skill-tag">小鼠模型</span>
+                <span class="skill-tag">ELISPOT</span>
+                <span class="skill-tag">结构解析</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">🏅 荣誉奖项</h2>
+        <div class="card">
+            <div class="award-item"><span class="award-year">2024</span> 上海科技大学优秀学生</div>
+            <div class="award-item"><span class="award-year">2023</span> 国际研讨会“最佳墙报”</div>
+            <div class="award-item"><span class="award-year">2017</span> 挑战杯省赛一等奖、国赛三等奖</div>
+        </div>
+    </div>
+
+    <footer>
+        <p>📧 1344867568@qq.com | 📞 1881653576</p>
+        <p style="font-size: 0.8rem; opacity: 0.6;">Built with ❤️ using AI + GitHub Pages | 2026</p>
+    </footer>
+</div>
+
+<script>
+    const canvas = document.getElementById('canvas-bg');
+    const ctx = canvas.getContext('2d');
+    
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    
+    canvas.width = width;
+    canvas.height = height;
+    
+    // 星星数组
+    let stars = [];
+    const STAR_COUNT = 400;
+    
+    class Star {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.radius = Math.random() * 2.5 + 0.5;
+            this.alpha = Math.random() * 0.7 + 0.2;
+            this.twinkleSpeed = Math.random() * 0.02 + 0.005;
+            this.twinkleDir = Math.random() > 0.5 ? 1 : -1;
+        }
+        
+        update() {
+            this.alpha += this.twinkleSpeed * this.twinkleDir;
+            if (this.alpha > 0.9) {
+                this.alpha = 0.9;
+                this.twinkleDir = -1;
+            }
+            if (this.alpha < 0.15) {
+                this.alpha = 0.15;
+                this.twinkleDir = 1;
+            }
+        }
+        
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+            ctx.fill();
+        }
+    }
+    
+    // 初始化星星
+    function initStars() {
+        stars = [];
+        for (let i = 0; i < STAR_COUNT; i++) {
+            stars.push(new Star());
+        }
+    }
+    
+    // 星云/银河效果
+    function drawNebula() {
+        // 银河光带
+        const grad1 = ctx.createLinearGradient(0, height * 0.3, width, height * 0.7);
+        grad1.addColorStop(0, 'rgba(60, 40, 100, 0.15)');
+        grad1.addColorStop(0.3, 'rgba(40, 30, 80, 0.1)');
+        grad1.addColorStop(0.6, 'rgba(80, 50, 120, 0.12)');
+        grad1.addColorStop(1, 'rgba(30, 20, 60, 0.08)');
+        ctx.fillStyle = grad1;
+        ctx.fillRect(0, 0, width, height);
+        
+        // 星云气团
+        for (let i = 0; i < 5; i++) {
+            const grad = ctx.createRadialGradient(
+                width * (0.2 + Math.sin(Date.now() * 0.0001 + i) * 0.1),
+                height * (0.3 + Math.cos(Date.now() * 0.00007 + i) * 0.2),
+                50,
+                width * (0.2 + Math.sin(Date.now() * 0.0001 + i) * 0.1),
+                height * (0.3 + Math.cos(Date.now() * 0.00007 + i) * 0.2),
+                300
+            );
+            grad.addColorStop(0, `rgba(80, 60, 140, 0.05)`);
+            grad.addColorStop(1, `rgba(30, 20, 70, 0)`);
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, width, height);
+        }
+    }
+    
+    // 流星效果
+    let meteors = [];
+    
+    class Meteor {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height * 0.3;
+            this.vx = (Math.random() - 0.5) * 8 - 4;
+            this.vy = Math.random() * 5 + 3;
+            this.length = Math.random() * 60 + 30;
+            this.alpha = Math.random() * 0.6 + 0.3;
+            this.active = true;
+        }
+        
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x < -100 || this.x > width + 100 || this.y > height + 100) {
+                this.active = false;
+            }
+        }
+        
+        draw() {
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(this.x - this.vx * 0.8, this.y - this.vy * 0.8);
+            ctx.strokeStyle = `rgba(255, 255, 255, ${this.alpha})`;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 200, ${this.alpha})`;
+            ctx.fill();
+        }
+    }
+    
+    function addMeteor() {
+        if (Math.random() < 0.005 && meteors.length < 3) {
+            meteors.push(new Meteor());
+        }
+    }
+    
+    function animate() {
+        // 深邃星空背景
+        ctx.fillStyle = '#050515';
+        ctx.fillRect(0, 0, width, height);
+        
+        // 星云
+        drawNebula();
+        
+        // 星星
+        stars.forEach(star => {
+            star.update();
+            star.draw();
+        });
+        
+        // 流星
+        addMeteor();
+        for (let i = meteors.length - 1; i >= 0; i--) {
+            meteors[i].update();
+            meteors[i].draw();
+            if (!meteors[i].active) {
+                meteors.splice(i, 1);
+            }
+        }
+        
+        requestAnimationFrame(animate);
+    }
+    
+    function resizeCanvas() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+        initStars();
+    }
+    
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    animate();
+</script>
+</body>
+</html>
